@@ -1,33 +1,38 @@
 import React, { Component } from 'react';
+import {  Switch, Route,BrowserRouter as Router} from "react-router-dom";
 import "./app.css";
 import Menu from './components/menu';
-import Products from './components/products';
+import route from './route';
+
 class App extends Component {
+  showContent =(routes) => {
+    var result = null
+    if (routes.length >0) {
+      result = route.map( (route,index) => {
+       return <Route 
+          key ={index}
+          path = {route.path}
+          exact= {route.exact}
+          component={route.main}
+        />
+      })
+    }
+    return <Switch >{result}</Switch>
+  }
   render() {
     return (
+      <Router >
       <div className="App">
-
         <Menu />
-
-
         <div className="container">
-
           <div className="row">
-            <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <button type="button" className="btn btn-info mb-10">Them San Pham</button>
-            </div>
-
-
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-              <Products />
-            </div>
-
+           {this.showContent(route)} 
           </div>
-
         </div>
 
 
       </div>
+      </Router>
     );
   }
 }

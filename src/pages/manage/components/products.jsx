@@ -1,8 +1,28 @@
 import React, { Component } from 'react';
+import Product from './product';
 
 class Products extends Component {
+  state = {
+    products : [
+      {
+        id: 100,
+        name: 'Iphone 6s Plus',
+        price: 5000,
+        status: false,
+      }
+    ]
+  }
+  showProduct =(products) => {
+    return products.map( (p, i) => {
+      return <Product key={i} index={i} product={p}  />
+    } )
+  }
   render() {
     return (
+      
+      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+      <button type="button" className="btn btn-primary mb-10">Add San Pham</button>
       <div className="panel panel-primary">
         <div className="panel-heading">
           <h3 className="panel-title">Danh Sach San Pham</h3>
@@ -21,22 +41,11 @@ class Products extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>Iphone 6 plus</td>
-                <td>5000</td>
-                <td>
-                  <span className="label label-warning">Con Hang</span>
-                </td>
-                <td>
-                  <button type="button" className="btn btn-success">Sua</button>
-                  <button type="button" className="btn btn-danger ml-10">Xoa</button>
-                </td>
-              </tr>
+              {this.showProduct(this.state.products)}
             </tbody>
           </table>
         </div>
+      </div>
       </div>
     );
   }
