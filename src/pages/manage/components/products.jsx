@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
 import Product from './product';
+import {connect} from 'react-redux'
 
 class Products extends Component {
-  state = {
-    products : [
-      {
-        id: 100,
-        name: 'Iphone 6s Plus',
-        price: 5000,
-        status: false,
-      }
-    ]
-  }
+  
   showProduct =(products) => {
     return products.map( (p, i) => {
       return <Product key={i} index={i} product={p}  />
-    } )
+    })
   }
   render() {
+
     return (
       
       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -41,7 +34,7 @@ class Products extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.showProduct(this.state.products)}
+              {this.showProduct(this.props.products)}
             </tbody>
           </table>
         </div>
@@ -51,4 +44,11 @@ class Products extends Component {
   }
 }
 
-export default Products;
+const mapStateToProps = (state) =>{
+return {
+  products: state.products
+}
+}
+
+
+export default connect(mapStateToProps,null) (Products);
