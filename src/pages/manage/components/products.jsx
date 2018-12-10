@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import Product from './product';
 import {connect} from 'react-redux'
+import {  FetchProductsRequest } from '../actions/manage';
 
 class Products extends Component {
-  
+  state = {
+    products : []
+  }  
+  componentDidMount() {
+    this.props.fetAllProducts()
+  }
   showProduct =(products) => {
     return products.map( (p, i) => {
       return <Product key={i} index={i} product={p}  />
@@ -34,8 +40,7 @@ class Products extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.showProduct(this.props.products)}
-            </tbody>
+              {this.showProduct(this.state.products)} </tbody>
           </table>
         </div>
       </div>
@@ -49,6 +54,12 @@ return {
   products: state.products
 }
 }
+const mapDispatchToProps = (dispatch,props) =>{
+return {
+  fetAllProducts: () => {
+    dispatch(FetchProductsRequest())
+  }
+}
+}
 
-
-export default connect(mapStateToProps,null) (Products);
+export default connect(mapStateToProps,mapDispatchToProps) (Products);
